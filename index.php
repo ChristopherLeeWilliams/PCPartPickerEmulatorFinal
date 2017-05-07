@@ -28,7 +28,6 @@
             
             <label class="sr-only" for="inlineFormInputGroup"></label>
             <div class="input-group mb-2 mr-sm-2 mb-sm-0 login-input">
-                <!--id for inputs? = inlineFormInputGroup-->
                 <input type="text" class="form-control" id="username" placeholder="Username" name="username">
             </div>
             
@@ -44,18 +43,71 @@
         </form>
     </div>
     
-    <!--Administrator Tools-->
+    <!--Administrator Tool Buttons-->
     <div class="admin-tools-menu" id="admin-tools-menu">
         <form class="form-inline" id="admin-tools">
-            <button type="button" class="btn btn-primary btn-sm" id="adminTool1">Main Screen</button>
-            <button type="button" class="btn btn-primary btn-sm" >Update Database Entry</button>
-            <button type="button" class="btn btn-primary btn-sm" >Add Database Entry</button>
-            <button type="button" class="btn btn-primary btn-sm" >Delete Database Entry</button>
-            <button type="button" class="btn btn-primary btn-sm" >Generate Report</button>
+            <button type="button" class="btn btn-primary btn-sm" onclick=goHome()>Home</button>
+            <button type="button" class="btn btn-primary btn-sm" id="modify-database-btn">Update Database Entry</button>
+        </form>
+    </div>
+    
+    <div class="admin-tools-menu admin-tools-submenu" id="modify-database-div">
+        <h5>Select a component:</h5>
+        <form class="form-inline" id="modify-database-form">
+            <button type="button" class="btn btn-primary btn-sm" onClick="location.href='/Final Project/Admin Tools/caseForm.php'">Case</button>
+            <button type="button" class="btn btn-primary btn-sm" onClick="location.href='/Final Project/Admin Tools/cpuForm.php'">CPU</button>
+            <button type="button" class="btn btn-primary btn-sm">GPU</button>
+            <button type="button" class="btn btn-primary btn-sm">Motherboard</button>
+            <button type="button" class="btn btn-primary btn-sm">Power Supply</button>
+            <button type="button" class="btn btn-primary btn-sm">Memory</button>
+            <button type="button" class="btn btn-primary btn-sm">Storage</button>
         </form>
     </div>
     
     
+    <!------------Admin Display and tool functions----------->
+    <script>
+        
+        $('#modify-database-btn').on("click",function() {
+            if($('#modify-database-div').is(":visible")) {
+                $('.admin-tools-submenu').slideUp();
+            } else {
+                $('.admin-tools-submenu').slideUp();
+                $('#modify-database-div').slideDown();
+            }
+        });
+        
+        // Manages what the page does when it loaded
+        if ('<?php echo strcmp($_SESSION["username"],""); ?>' != 0 ) { loggedInDisplay(); } 
+        else {  loggedOutDisplay(); } 
+        
+    
+        function loggedInDisplay() {
+            $('#error').html("");
+            $('#admin-tools-menu').slideDown(400);
+            $('#btn-login').hide();
+            $('#btn-logout').show();
+            $('.login-input').hide();
+            $('#adminUsername').html('Administrator:  <b><?php echo $_SESSION["username"]; ?></b>');
+        }
+        
+        function loggedOutDisplay() {
+            
+            $('.admin-tools-menu').slideUp(400);
+            $("#login-form").trigger('reset');
+            $('#btn-login').show();
+            $('#btn-logout').hide();
+            $('#adminUsername').html("Administrator: ");
+            $('.login-input').show();
+        }
+    </script>
+    
+    
+    <script>
+        function goHome() {
+            window.location.href="/Final Project/index.php";
+        }
+    </script>
     <!-----------------------------------------CASE SELECTION------------------------------------------>
     <div id="caseSelection" class="itemSelection">
         <button id="myBtnCase">Choose Case</button>
@@ -104,7 +156,7 @@
     
     <!------------------------------------------CPU SELECTION------------------------------------------>
     <div id="cpuSelection" class="itemSelection">
-        <button id="myBtnCPU" class="btn btn-info btn-sm">Choose CPU</button>
+        <button id="myBtnCPU" >Choose CPU</button>
         <div id="myModalCPU" class="modal">
             <div class="modal-content">
                 <!--<span class="close">&times;</span>-->
@@ -171,7 +223,7 @@
                     
                     <?php
                         // Print out hardware parts with relevant information
-                        $gpu = getGPUs($dbConn, $_SESSION["sql"]);
+                        $gpu = getGPUs($dbConn);
                         $i = 0;
                         for($i; $i < count($gpu); $i++) {
                             echo '<tr>';
@@ -216,7 +268,7 @@
                     </tr>
                     
                     <?php
-                        $mbs = getMotherboards($dbConn, $_SESSION["sql"]);
+                        $mbs = getMotherboards($dbConn);
                         $i = 0;
                         for($i; $i < count($mbs); $i++) {
                             echo '<tr>';
@@ -261,7 +313,7 @@
                     
                     <?php
                         // Print out hardware parts with relevant information
-                        $psu = getPSUs($dbConn, $_SESSION["sql"]);
+                        $psu = getPSUs($dbConn);
                         $i = 0;
                         for($i; $i < count($psu); $i++) {
                             echo '<tr>';
@@ -538,34 +590,5 @@
         }
         // ----------------------- END STORAGE MODAL -----------------------
     </script>
-
-    
-    <!--Display and tool functions-->
-    <script>
-        // Manages what the page does when it loaded
-        if ('<?php echo strcmp($_SESSION["username"],""); ?>' != 0 ) { loggedInDisplay(); } 
-        else {  loggedOutDisplay(); } 
-    
-    
-        function loggedInDisplay() {
-            $('#error').html("");
-            $('#admin-tools-menu').slideDown(400);
-            $('#btn-login').hide();
-            $('#btn-logout').show();
-            $('.login-input').hide();
-            $('#adminUsername').html('Administrator:  <b><?php echo $_SESSION["username"]; ?></b>');
-        }
-        
-        function loggedOutDisplay() {
-            $('#admin-tools-menu').slideUp(400);
-            $("#login-form").trigger('reset');
-            $('#btn-login').show();
-            $('#btn-logout').hide();
-            $('#adminUsername').html("Administrator: ");
-            $('.login-input').show();
-        }
-    
-    </script>
-
 
 </html>

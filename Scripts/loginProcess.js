@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('#btn-login').on('click', function() {
-    
+        
         var data = {
             username: $('#username').val(),
             password: $('#password').val(),
@@ -47,7 +47,7 @@ $(document).ready(function() {
     });
     
     $('#btn-logout').on('click', function() {
-    
+
         var data = {
             username: $('#username').val(),
             password: $('#password').val(),
@@ -59,6 +59,10 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("Logout Successful");
                 loggedOutDisplay();
+                
+                // Possible force rederict in case the user is on admin
+                // tools page?
+                //window.location.href="/Final Project/index.php";
             }
         });
     

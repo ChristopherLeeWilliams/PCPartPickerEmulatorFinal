@@ -1,0 +1,67 @@
+[07-May-2017 04:48:18 UTC] PHP Parse error:  syntax error, unexpected '?>' in /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php on line 12
+[07-May-2017 05:07:52 UTC] PHP Parse error:  syntax error, unexpected ';' in /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php on line 11
+[07-May-2017 05:26:04 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 14
+[07-May-2017 05:26:04 UTC] PHP Stack trace:
+[07-May-2017 05:26:04 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 05:26:04 UTC] PHP   2. getCases() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:63
+[07-May-2017 05:27:14 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 14
+[07-May-2017 05:27:14 UTC] PHP Stack trace:
+[07-May-2017 05:27:14 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 05:27:14 UTC] PHP   2. getCases() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:64
+[07-May-2017 05:29:21 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 14
+[07-May-2017 05:29:21 UTC] PHP Stack trace:
+[07-May-2017 05:29:21 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 05:29:21 UTC] PHP   2. getCases() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:64
+[07-May-2017 05:29:42 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 14
+[07-May-2017 05:29:42 UTC] PHP Stack trace:
+[07-May-2017 05:29:42 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 05:29:42 UTC] PHP   2. getCases() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:64
+[07-May-2017 05:30:37 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 14
+[07-May-2017 05:30:37 UTC] PHP Stack trace:
+[07-May-2017 05:30:37 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 05:30:37 UTC] PHP   2. getCases() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:64
+[07-May-2017 05:31:16 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 14
+[07-May-2017 05:31:16 UTC] PHP Stack trace:
+[07-May-2017 05:31:16 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 05:31:16 UTC] PHP   2. getCases() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:65
+[07-May-2017 05:32:17 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 14
+[07-May-2017 05:32:17 UTC] PHP Stack trace:
+[07-May-2017 05:32:17 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 05:32:17 UTC] PHP   2. getCases() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:118
+[07-May-2017 05:34:01 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 14
+[07-May-2017 05:34:01 UTC] PHP Stack trace:
+[07-May-2017 05:34:01 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 05:34:01 UTC] PHP   2. getCases() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:118
+[07-May-2017 05:34:55 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 14
+[07-May-2017 05:34:55 UTC] PHP Stack trace:
+[07-May-2017 05:34:55 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 05:34:55 UTC] PHP   2. getCases() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:118
+[07-May-2017 05:39:29 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 145
+[07-May-2017 05:39:29 UTC] PHP Stack trace:
+[07-May-2017 05:39:29 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 05:39:29 UTC] PHP   2. getPSUs() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:116
+[07-May-2017 05:39:38 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 145
+[07-May-2017 05:39:38 UTC] PHP Stack trace:
+[07-May-2017 05:39:38 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 05:39:38 UTC] PHP   2. getPSUs() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:116
+[07-May-2017 05:44:33 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 14
+[07-May-2017 05:44:33 UTC] PHP Stack trace:
+[07-May-2017 05:44:33 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 05:44:33 UTC] PHP   2. getCases() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:114
+[07-May-2017 05:48:19 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 14
+[07-May-2017 05:48:19 UTC] PHP Stack trace:
+[07-May-2017 05:48:19 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 05:48:19 UTC] PHP   2. getCases() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:107
+[07-May-2017 06:10:53 UTC] PHP Fatal error:  Call to undefined function getCPUs() in /home/ubuntu/workspace/Final Project/Admin Tools/cpuForm.php on line 62
+[07-May-2017 06:10:53 UTC] PHP Stack trace:
+[07-May-2017 06:10:53 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/cpuForm.php:0
+[07-May-2017 06:33:17 UTC] PHP Parse error:  syntax error, unexpected 'Component' (T_STRING), expecting ',' or ';' in /home/ubuntu/workspace/Final Project/Admin Tools/cpuForm.php on line 82
+[07-May-2017 06:34:14 UTC] PHP Parse error:  syntax error, unexpected 'Component' (T_STRING), expecting ',' or ';' in /home/ubuntu/workspace/Final Project/Admin Tools/cpuForm.php on line 82
+[07-May-2017 07:37:18 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 14
+[07-May-2017 07:37:18 UTC] PHP Stack trace:
+[07-May-2017 07:37:18 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 07:37:18 UTC] PHP   2. getCases() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:70
+[07-May-2017 07:42:37 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/Final Project/Component Selection Data/componentSelectionFunctions.php on line 14
+[07-May-2017 07:42:37 UTC] PHP Stack trace:
+[07-May-2017 07:42:37 UTC] PHP   1. {main}() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:0
+[07-May-2017 07:42:37 UTC] PHP   2. getCases() /home/ubuntu/workspace/Final Project/Admin Tools/caseForm.php:63
