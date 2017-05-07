@@ -59,7 +59,6 @@
         </tr>
         
         <?php
-            
             // Print out hardware parts with relevant information
             $case = getCases($dbConn);
             $i = 0;
@@ -72,9 +71,9 @@
                 echo '<td>'.$case[$i]["caseNum35Bays"].'</td>';
                 echo '<td>$'.$case[$i]["casePrice"].'</td>';
                 echo '<td><a href="caseForm.php?caseId='.$case[$i]["caseId"].'">Update</a></td>';
-                    echo '<td><a href="Component Selection Data/caseSelectData.php?caseId='.$case[$i]["caseId"].
-                     '&remove=false">Delete</a></td>';
-                    echo '</tr>';
+                echo '<td><a href="Component Selection Data/caseSelectData.php?caseId='.$case[$i]["caseId"].
+                 '&remove=false">Delete</a></td>';
+                echo '</tr>';
             }
         ?> 
         </table>
@@ -83,7 +82,6 @@
     <?php
         // Print current update target
         $caseS = getCase($dbConn,$_GET['caseId']);
-        echo count($caseS);
         // echo '<table class="selectTable"><tr>';
         // echo '<td>'.$caseS["caseName"].'</td>';
         // echo '<td>'.$caseS["caseFFType"].'</td>';
@@ -100,47 +98,61 @@
     <div class="form-group row">
       <label for="example-text-input" class="col-1 col-form-label">Case Name</label>
       <div class="col-10">
-        <input class="form-control" type="text" value="" id="">
+        <input class="form-control" type="text" value="" id="caseNameInput">
       </div>
     </div>
     
     <div class="form-group row">
       <label for="example-number-input" class="col-1 col-form-label">Form Factor</label>
       <div class="col-10">
-      <select class="form-control" id="">
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+      <select class="form-control" id="caseFFInput">
+         <?php
+            $formFactors = getMBFormFactors($dbConn);
+            $i = 0;
+            for($i; $i < count($formFactors); $i++) {
+              echo '<option value='.$formFactors[$i]["mbFFId"].'>'.$formFactors[$i]["mbFFType"].'</option>';
+            }
+        ?>
       </select>
       </div>
     </div>
-    
     <div class="form-group row">
       <label for="example-number-input" class="col-1 col-form-label">Max GPU Length</label>
       <div class="col-10">
-        <input class="form-control" type="number" value="" id="">
+        <input class="form-control" type="number" value="" id="caseMaxGPULengthInput">
       </div>
     </div>
     
     <div class="form-group row">
       <label for="example-number-input" class="col-1 col-form-label">#2.5' Bays</label>
       <div class="col-10">
-        <input class="form-control" type="number" value="" id="">
+        <input class="form-control" type="number" value="" id="case25BaysInput">
       </div>
     </div>
     
     <div class="form-group row">
       <label for="example-number-input" class="col-1 col-form-label">#3.5' Bays</label>
       <div class="col-10">
-        <input class="form-control" type="number" value="" id="">
+        <input class="form-control" type="number" value="" id="case35BaysInput">
       </div>
     </div>
     
     <div class="form-group row">
       <label for="example-number-input" class="col-1 col-form-label">Price</label>
       <div class="col-10">
-        <input class="form-control" type="number" value="" id="">
+        <input class="form-control" type="number" value="" id="casePriceInput">
       </div>
     </div>
 
+    <script>
+      if ('<?php echo $_GET['cpuId']; ?>' != null) {
+        $('#caseNameInput').val('<?php echo $caseS["caseName"]; ?>');
+        $('#caseFFInput').val('<?php echo $caseS["caseFFId"]; ?>');
+        $('#caseMaxGPULengthInput').val('<?php echo $caseS["maxGPULengthInches"]; ?>');
+        $('#case25BaysInput').val('<?php echo $caseS["caseNum25Bays"]; ?>');
+        $('#case35BaysInput').val('<?php echo $caseS["caseNum35Bays"]; ?>');
+        $('#casePriceInput').val('<?php echo $caseS["casePrice"]; ?>');
+      }
+    </script>
+  
 </html>

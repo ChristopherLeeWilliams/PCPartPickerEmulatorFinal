@@ -42,7 +42,7 @@
                 FROM `Case`
                 LEFT JOIN MBFormFactors
                     ON `Case`.caseFFId=MBFormFactors.mbFFId
-                WHERE Case.caseId=$id";
+                WHERE `Case`.caseId=$id";
         
         
         // Prepare SQL
@@ -51,17 +51,9 @@
         // Execute SQL
         $stmt->execute();
         
-        $component = [];
+        $row = $stmt->fetch();
         
-        $component["caseId"] = $row["caseId"];
-        $component["caseName"] = $row["caseName"];
-        $component["caseFFType"] = $row["mbFFType"];
-        $component["maxGPULengthInches"] = $row["maxGPULengthInches"];
-        $component["caseNum25Bays"] = $row["caseNum25Bays"];
-        $component["caseNum35Bays"] = $row["caseNum35Bays"];
-        $component["casePrice"] = $row["casePrice"];
-        
-        return $component;
+        return $row;
     }
     
     function getCPUs($dbConn) {
@@ -110,25 +102,12 @@
             
             // Execute SQL
             $stmt->execute();
-            $component = [];
-            
-            $i = 0;
-            
             $row = $stmt->fetch();
-            $component["cpuId"] = $row["cpuId"];
-            $component["cpuName"] = $row["cpuName"];
-            $component["cpuBaseClock"] = $row["cpuBaseClock"];
-            $component["socketType"] = $row["socketType"];
-            $component["cpuNumCores"] = $row["cpuNumCores"];
-            $component["cpuTDP"] = $row["cpuTDP"];
-            $component["cpuPrice"] = $row["cpuPrice"];
-            $component["cpuManufacturer"] = $row["cpuManufacturer"];
-            $component["cpuSocketId"] = $row["cpuSocketId"];
             
-            return $component;
+            return $row;
         }
         
-        function getGPUs($dbConn) {
+    function getGPUs($dbConn) {
         // Create sql statement
         $sql = "SELECT GPU.*
                 FROM GPU ORDER BY gpuName";
@@ -158,6 +137,24 @@
         }
         
         return $componentArr;
+    }
+    
+    function getGPU($dbConn, $id) {
+        // Create sql statement
+        $sql = "SELECT GPU.*
+                FROM GPU 
+                WHERE GPU.gpuId";
+        
+        
+        // Prepare SQL
+        $stmt = $dbConn->prepare($sql);
+        
+        // Execute SQL
+        $stmt->execute();
+        
+        $row = $stmt->fetch();
+        
+        return $row;
     }
     
     function getMotherboards($dbConn) {
@@ -195,6 +192,54 @@
         return $componentArr;
     }
     
+    function getMotherboard($dbConn, $id) {
+         // Create sql statement
+        $sql = "SELECT Motherboard.*, Socket.*, MBFormFactors.*, RamType.* 
+                FROM Motherboard
+                LEFT JOIN Socket
+                    ON Motherboard.mbSocketId=Socket.socketId
+                LEFT JOIN MBFormFactors
+                    ON Motherboard.mbFFId=MBFormFactors.mbFFId
+                LEFT JOIN RamType
+                    ON Motherboard.mbRamTypeId=RamType.ramTypeId
+                WHERE Motherboard.mbId=$id";
+        
+        // Prepare SQL
+        $stmt = $dbConn->prepare($sql);
+        
+        // Execute SQL
+        $stmt->execute();
+
+        $row = $stmt->fetch();
+        
+        return $row;
+    }
+    
+    function getMBFormFactors($dbConn) {
+         // Create sql statement
+        $sql = "SELECT MBFormFactors.* 
+                FROM MBFormFactors
+                ORDER BY MBFormFactors.mbFFId";
+        
+        // Prepare SQL
+        $stmt = $dbConn->prepare($sql);
+        
+        // Execute SQL
+        $stmt->execute();
+        
+        $componentArr = [];
+        $component = [];
+        $i = 0;
+
+        while($row = $stmt->fetch()) { 
+            $component["mbFFId"] = $row["mbFFId"];
+            $component["mbFFType"] = $row["mbFFType"];
+            $componentArr[$i] = $component;
+            $i++;
+        }
+        return $componentArr;
+    }
+    
     function getPSUs($dbConn) {
         // Create sql statement
         $sql = "SELECT psuId, psuName, psuWatts, psuModularity, psuPrice, psuEfficiency
@@ -223,6 +268,23 @@
         }
         
         return $componentArr;
+    }
+    
+    function getPSU($dbConn, $id) {
+        // Create sql statement
+        $sql = "SELECT psuId, psuName, psuWatts, psuModularity, psuPrice, psuEfficiency
+                FROM PSU WHERE PSU.psuID=$id";
+        
+        
+        // Prepare SQL
+        $stmt = $dbConn->prepare($sql);
+        
+        // Execute SQL
+        $stmt->execute();
+        
+        $row = $stmt->fetch();
+        
+        return $row;
     }
     
     function getRam($dbConn) {
@@ -256,6 +318,25 @@
         }
         
         return $componentArr;
+    }
+    
+    function getRamSingle($dbConn,$id) {
+         // Create sql statement
+        $sql = "SELECT RAM.*, RamType.*
+                FROM RAM 
+                LEFT JOIN RamType
+                    ON RAM.ramTypeId=RamType.ramTypeId
+               WHERE RAM.ramId=$id";
+        
+        // Prepare SQL
+        $stmt = $dbConn->prepare($sql);
+        
+        // Execute SQL
+        $stmt->execute();
+        
+        $row = $stmt->fetch();
+        
+        return $row;
     }
     
     function getSockets($dbConn) {
@@ -315,6 +396,25 @@
         }
         
         return $componentArr;
+    }
+    
+    function getStorage($dbConn, $id) {
+        // Create sql statement
+        $sql = "SELECT Storage.*, StorageFormFactors.*
+                FROM Storage 
+                LEFT JOIN StorageFormFactors
+                    ON Storage.storageFFId=StorageFormFactors.storageFFId
+                WHERE Storage.storageId=$id";
+        
+        // Prepare SQL
+        $stmt = $dbConn->prepare($sql);
+        
+        // Execute SQL
+        $stmt->execute();
+        
+        $row = $stmt->fetch();
+        
+        return $row;
     }
 
 
