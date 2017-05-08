@@ -2,7 +2,8 @@
     require_once('../connection.php');
     session_start();
     
-    // Used to display information on hub page
+    $_SESSION['errors'] = null;
+    
     if($_GET["remove"] == true) {
         $_SESSION["psuSelected"] = NULL;
         $_SESSION["compatibilityChecked"] = false;

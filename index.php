@@ -108,327 +108,404 @@
             window.location.href="/Final Project/index.php";
         }
     </script>
+    <div class></div>
     <!-----------------------------------------CASE SELECTION------------------------------------------>
-    <div id="caseSelection" class="itemSelection">
-        <button id="myBtnCase">Choose Case</button>
-        <div id="myModalCase" class="modal">
-            <div class="modal-content">
-                <!--<span class="close">&times;</span>-->
-                <button type="button" onclick=caseCloseModal() class="btn btn-link closeModal">X</button></br>
-                <table class="selectTable">
-                    <!-- Put column names on top of the table -->
-                    <tr>
-                        <td><b>Name</b></td>
-                        <td><b>Form Factor (Motherboard)</b></td>
-                        <td><b>Maximum GPU Length (Inches)</b></td>
-                        <td><b>2.5" Bays</b></td>
-                        <td><b>3.5" Bays</b></td>
-                        <td><b>Price</b></td>
-                        <td></td>
-                    </tr>
-                    
-                    <?php
-                        // Print out hardware parts with relevant information
-                        $case = getCases($dbConn);
-                        $i = 0;
-                        for($i; $i < count($case); $i++) {
-                            echo '<tr>';
-                            echo '<td>'.$case[$i]["caseName"].'</td>';
-                            echo '<td>'.$case[$i]["caseFFType"].'</td>';
-                            echo '<td>'.$case[$i]["maxGPULengthInches"].'</td>';
-                            echo '<td>'.$case[$i]["caseNum25Bays"].'</td>';
-                            echo '<td>'.$case[$i]["caseNum35Bays"].'</td>';
-                            echo '<td>$'.$case[$i]["casePrice"].'</td>';
-                            echo '<td><a href="Component Selection Data/caseSelectData.php?caseId='.$case[$i]["caseId"].
-                                 '&remove=false">Add</a></td>';
-                            echo '</tr>';
-                        }
-                    ?>
-                </table>
+    <div class="form-inline" id="componentSelectionRow">
+        <h3>Case:</h3>
+            <div id="caseSelection" class="itemSelection">
+                <button id="myBtnCase">Choose Case</button>
+                <div id="myModalCase" class="modal">
+                    <div class="modal-content">
+                        <button type="button" onclick=caseCloseModal() class="btn btn-link closeModal">X</button></br>
+                        <h3 style="text-align:center">Case Selection</h5></br>
+                        <table class="selectTable">
+                            <!-- Put column names on top of the table -->
+                            <tr>
+                                <td><b>Name</b></td>
+                                <td><b>Form Factor (Motherboard)</b></td>
+                                <td><b>Maximum GPU Length (Inches)</b></td>
+                                <td><b>2.5" Bays</b></td>
+                                <td><b>3.5" Bays</b></td>
+                                <td><b>Price</b></td>
+                                <td></td>
+                            </tr>
+                            
+                            <?php
+                                // Print out hardware parts with relevant information
+                                $case = getCases($dbConn);
+                                $i = 0;
+                                for($i; $i < count($case); $i++) {
+                                    echo '<tr>';
+                                    echo '<td>'.$case[$i]["caseName"].'</td>';
+                                    echo '<td>'.$case[$i]["caseFFType"].'</td>';
+                                    echo '<td>'.$case[$i]["maxGPULengthInches"].'</td>';
+                                    echo '<td>'.$case[$i]["caseNum25Bays"].'</td>';
+                                    echo '<td>'.$case[$i]["caseNum35Bays"].'</td>';
+                                    echo '<td>$'.$case[$i]["casePrice"].'</td>';
+                                    echo '<td><a href="Component Selection Data/caseSelectData.php?caseId='.$case[$i]["caseId"].
+                                         '&remove=false">Add</a></td>';
+                                    echo '</tr>';
+                                }
+                            ?>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div id="caseSelectionData" class="itemSelection">
-        <?php echo $_SESSION["caseSelected"]["caseName"].'   '.$_SESSION["caseSelected"]["casePrice"]; ?>
-        <a href="Component Selection Data/caseSelectData.php?remove=true">X</a>
+            <div id="caseSelectionData" class="itemSelection">
+                <?php 
+                    echo '<b>Name:</b>  '.$_SESSION["caseSelected"]["caseName"].'</br>';
+                    echo '<b>Price:</b> $'.$_SESSION["caseSelected"]["casePrice"].'</br>'; 
+                ?>
+                <a href="Component Selection Data/caseSelectData.php?remove=true"><h5>Remove</h5></a>
+            </div>
     </div>
     <!---------------------------------------END CASE SELECTION---------------------------------------->
     
     <!------------------------------------------CPU SELECTION------------------------------------------>
-    <div id="cpuSelection" class="itemSelection">
-        <button id="myBtnCPU" >Choose CPU</button>
-        <div id="myModalCPU" class="modal">
-            <div class="modal-content">
-                <!--<span class="close">&times;</span>-->
-                <button type="button" onclick=cpuCloseModal() class="btn btn-link closeModal">X</button></br>
-                <table class="selectTable">
-                    <!-- Put column names on top of the table -->
-                    <tr>
-                        <td><b>Name</b></td>
-                        <td><b>Socket</b></td>
-                        <td><b>Base Clock</b></td>
-                        <td><b># Cores</b></td>
-                        <td><b>TDP (Watts)</b></td>
-                        <td><b>Price</b></td>
-                        <td></td>
-                    </tr>
-                    
-                    <?php
-                        // Print out hardware parts with relevant information
-                        $CPUs = getCPUs($dbConn);
-                        $i = 0;
-                        for($i; $i < count($CPUs); $i++) {
-                            echo '<tr>';
-                            echo '<td>'.$CPUs[$i]["cpuName"].'</td>';
-                            echo '<td>'.$CPUs[$i]["socketType"].'</td>';
-                            echo '<td>'.$CPUs[$i]["cpuBaseClock"].'</td>';
-                            echo '<td>'.$CPUs[$i]["cpuNumCores"].'</td>';
-                            echo '<td>'.$CPUs[$i]["cpuTDP"].'</td>';
-                            echo '<td>$'.$CPUs[$i]["cpuPrice"].'</td>';
-                            echo '<td><a href="Component Selection Data/cpuSelectData.php?cpuId='.$CPUs[$i]["cpuId"].
-                                 '&remove=false">Add</a></td>';
-                            echo '</tr>';
-                        }
-                    ?>
-                </table>
+    <div class="form-inline" id="componentSelectionRow">
+        <h3>CPU:</h3>
+        <div id="cpuSelection" class="itemSelection">
+            <button id="myBtnCPU" >Choose CPU</button>
+            <div id="myModalCPU" class="modal">
+                <div class="modal-content">
+                    <!--<span class="close">&times;</span>-->
+                    <button type="button" onclick=cpuCloseModal() class="btn btn-link closeModal">X</button></br>
+                    <h3 style="text-align:center">CPU Selection</h5></br>
+                    <table class="selectTable">
+                        <!-- Put column names on top of the table -->
+                        <tr>
+                            <td><b>Name</b></td>
+                            <td><b>Socket</b></td>
+                            <td><b>Base Clock</b></td>
+                            <td><b># Cores</b></td>
+                            <td><b>TDP (Watts)</b></td>
+                            <td><b>Price</b></td>
+                            <td></td>
+                        </tr>
+                        
+                        <?php
+                            // Print out hardware parts with relevant information
+                            $CPUs = getCPUs($dbConn);
+                            $i = 0;
+                            for($i; $i < count($CPUs); $i++) {
+                                echo '<tr>';
+                                echo '<td>'.$CPUs[$i]["cpuName"].'</td>';
+                                echo '<td>'.$CPUs[$i]["socketType"].'</td>';
+                                echo '<td>'.$CPUs[$i]["cpuBaseClock"].'</td>';
+                                echo '<td>'.$CPUs[$i]["cpuNumCores"].'</td>';
+                                echo '<td>'.$CPUs[$i]["cpuTDP"].'</td>';
+                                echo '<td>$'.$CPUs[$i]["cpuPrice"].'</td>';
+                                echo '<td><a href="Component Selection Data/cpuSelectData.php?cpuId='.$CPUs[$i]["cpuId"].
+                                     '&remove=false">Add</a></td>';
+                                echo '</tr>';
+                            }
+                        ?>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="cpuSelectionData" class="itemSelection">
-        <?php echo $_SESSION["cpuSelected"]["cpuName"].'   '.$_SESSION["cpuSelected"]["cpuPrice"]; ?>
-        <a href="Component Selection Data/cpuSelectData.php?remove=true">X</a>
+        <div id="cpuSelectionData" class="itemSelection">
+            <?php 
+                echo '<b>Name:</b>  '.$_SESSION["cpuSelected"]["cpuName"].'</br>';
+                echo '<b>Socket:</b> '.$_SESSION["cpuSelected"]["socketType"].'</br>';
+                echo '<b>Price:</b> $'.$_SESSION["cpuSelected"]["cpuPrice"].'</br>';
+            ?>
+            <a href="Component Selection Data/cpuSelectData.php?remove=true"><h5>Remove</h5></a>
+        </div>
     </div>
     <!----------------------------------------END CPU SELECTION---------------------------------------->
     
     
     <!------------------------------------------GPU SELECTION------------------------------------------>
-    <div id="gpuSelection" class="itemSelection">
-        <button id="myBtnGPU">Choose GPU</button>
-        <div id="myModalGPU" class="modal">
-            <div class="modal-content">
-                <!--<span class="close">&times;</span>-->
-                <button type="button" onclick=gpuCloseModal() class="btn btn-link closeModal">X</button></br>
-                <table class="selectTable">
-                    <!-- Put column names on top of the table -->
-                    <tr>
-                        <td><b>Name</b></td>
-                        <td><b>Manufacturer</b></td>
-                        <td><b>Base Clock</b></td>
-                        <td><b>Memory</b></td>
-                        <td><b>Length (Inches)</b></td>
-                        <td><b>TDP (Watts)</b></td>
-                        <td><b>Price</td>
-                        <td></td>
-                    </tr>
-                    
-                    <?php
-                        // Print out hardware parts with relevant information
-                        $gpu = getGPUs($dbConn);
-                        $i = 0;
-                        for($i; $i < count($gpu); $i++) {
-                            echo '<tr>';
-                            echo '<td>'.$gpu[$i]["gpuName"].'</td>';
-                            echo '<td>'.$gpu[$i]["gpuManufacturer"].'</td>';
-                            echo '<td>'.$gpu[$i]["gpuBaseClock"].'</td>';
-                            echo '<td>'.$gpu[$i]["gpuMemSize"].'</td>';
-                            echo '<td>'.$gpu[$i]["gpuLengthInches"].'</td>';
-                            echo '<td>'.$gpu[$i]["gpuTDP"].'</td>';
-                            echo '<td>$'.$gpu[$i]["gpuPrice"].'</td>';
-                            echo '<td><a href="Component Selection Data/gpuSelectData.php?gpuId='.$gpu[$i]["gpuId"].
-                                 '&remove=false">add</a></td>';
-                            echo '</tr>';
-                        }
-                    ?>
-                </table>
+    <div class="form-inline" id="componentSelectionRow">
+        <h3>GPU:</h3>
+        <div id="gpuSelection" class="itemSelection">
+            <button id="myBtnGPU">Choose GPU</button>
+            <div id="myModalGPU" class="modal">
+                <div class="modal-content">
+                    <!--<span class="close">&times;</span>-->
+                    <button type="button" onclick=gpuCloseModal() class="btn btn-link closeModal">X</button></br>
+                    <h3 style="text-align:center">GPU Selection</h5></br>
+                    <table class="selectTable">
+                        <!-- Put column names on top of the table -->
+                        <tr>
+                            <td><b>Name</b></td>
+                            <td><b>Manufacturer</b></td>
+                            <td><b>Base Clock</b></td>
+                            <td><b>Memory</b></td>
+                            <td><b>Length (Inches)</b></td>
+                            <td><b>TDP (Watts)</b></td>
+                            <td><b>Price</td>
+                            <td></td>
+                        </tr>
+                        
+                        <?php
+                            // Print out hardware parts with relevant information
+                            $gpu = getGPUs($dbConn);
+                            $i = 0;
+                            for($i; $i < count($gpu); $i++) {
+                                echo '<tr>';
+                                echo '<td>'.$gpu[$i]["gpuName"].'</td>';
+                                echo '<td>'.$gpu[$i]["gpuManufacturer"].'</td>';
+                                echo '<td>'.$gpu[$i]["gpuBaseClock"].'</td>';
+                                echo '<td>'.$gpu[$i]["gpuMemSize"].'</td>';
+                                echo '<td>'.$gpu[$i]["gpuLengthInches"].'</td>';
+                                echo '<td>'.$gpu[$i]["gpuTDP"].'</td>';
+                                echo '<td>$'.$gpu[$i]["gpuPrice"].'</td>';
+                                echo '<td><a href="Component Selection Data/gpuSelectData.php?gpuId='.$gpu[$i]["gpuId"].
+                                     '&remove=false">add</a></td>';
+                                echo '</tr>';
+                            }
+                        ?>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="gpuSelectionData" class="itemSelection">
-        <?php echo $_SESSION["gpuSelected"]["gpuName"].'   '.$_SESSION["gpuSelected"]["gpuPrice"]; ?>
-        <a href="Component Selection Data/gpuSelectData.php?remove=true">X</a>
+        <div id="gpuSelectionData" class="itemSelection">
+            <?php 
+                echo '<b>Name:</b>  '.$_SESSION["gpuSelected"]["gpuName"].'</br>';
+                echo '<b>Price:</b> $'.$_SESSION["gpuSelected"]["gpuPrice"].'</br>';
+            ?>
+            <a href="Component Selection Data/gpuSelectData.php?remove=true"><h5>Remove</h5></a>
+        </div>
     </div>
     <!----------------------------------------END GPU SELECTION---------------------------------------->
     
     <!--------------------------------------Motherboard SELECTION-------------------------------------->
-    <div id="mbSelection" class="itemSelection">
-        <button id="myBtnMB">Choose Motherboard</button>
-        <div id="myModalMB" class="modal">
-            <div class="modal-content">
-                <button type="button" onclick=mbCloseModal() class="btn btn-link closeModal">X</button></br>
-                <table class="selectTable">
-                    <!-- Put column names on top of the table -->
-                    <tr>
-                        <td><b>Name</b></td>
-                        <td><b>Socket</b></td>
-                        <td><b>Form Factor</b></td>
-                        <td><b># RAM Slots</b></td>
-                        <td><b>RAM Type</b></td>
-                        <td><b>Price</td>
-                        <td></td>
-                    </tr>
-                    
-                    <?php
-                        $mbs = getMotherboards($dbConn);
-                        $i = 0;
-                        for($i; $i < count($mbs); $i++) {
-                            echo '<tr>';
-                            echo '<td>'.$mbs[$i]["mbName"].'</td>';
-                            echo '<td>'.$mbs[$i]["socketType"].'</td>';
-                            echo '<td>'.$mbs[$i]["mbFFType"].'</td>';
-                            echo '<td>'.$mbs[$i]["mbNumRamSlots"].'</td>';
-                            echo '<td>'.$mbs[$i]["ramType"].'</td>';
-                            echo '<td>$'.$mbs[$i]["mbPrice"].'</td>';
-                            echo '<td><a href="Component Selection Data/motherboardSelectData.php?mbId='.$mbs[$i]["mbId"].
-                                 '&remove=false">add</a></td>';
-                            echo '</tr>';
-                        }
-                    ?>
-                </table>
+    <div class="form-inline" id="componentSelectionRow">
+        <h3>Motherboard:</h3>
+        <div id="mbSelection" class="itemSelection">
+            <button id="myBtnMB">Choose Motherboard</button>
+            <div id="myModalMB" class="modal">
+                <div class="modal-content">
+                    <button type="button" onclick=mbCloseModal() class="btn btn-link closeModal">X</button></br>
+                    <h3 style="text-align:center">Motherboard Selection</h5></br>
+                    <table class="selectTable">
+                        <!-- Put column names on top of the table -->
+                        <tr>
+                            <td><b>Name</b></td>
+                            <td><b>Socket</b></td>
+                            <td><b>Form Factor</b></td>
+                            <td><b># RAM Slots</b></td>
+                            <td><b>RAM Type</b></td>
+                            <td><b>Price</td>
+                            <td></td>
+                        </tr>
+                        
+                        <?php
+                            $mbs = getMotherboards($dbConn);
+                            $i = 0;
+                            for($i; $i < count($mbs); $i++) {
+                                echo '<tr>';
+                                echo '<td>'.$mbs[$i]["mbName"].'</td>';
+                                echo '<td>'.$mbs[$i]["socketType"].'</td>';
+                                echo '<td>'.$mbs[$i]["mbFFType"].'</td>';
+                                echo '<td>'.$mbs[$i]["mbNumRamSlots"].'</td>';
+                                echo '<td>'.$mbs[$i]["ramType"].'</td>';
+                                echo '<td>$'.$mbs[$i]["mbPrice"].'</td>';
+                                echo '<td><a href="Component Selection Data/motherboardSelectData.php?mbId='.$mbs[$i]["mbId"].
+                                     '&remove=false">add</a></td>';
+                                echo '</tr>';
+                            }
+                        ?>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="mbSelectionData" class="itemSelection">
-        <?php echo $_SESSION["mbSelected"]["mbName"].'   '.$_SESSION["mbSelected"]["mbPrice"]; ?>
-        <a href="Component Selection Data/motherboardSelectData.php?remove=true">X</a>
+        <div id="mbSelectionData" class="itemSelection">
+            <?php 
+                echo '<b>Name:</b>  '.$_SESSION["mbSelected"]["mbName"].'</br>';
+                echo '<b>Socket:</b> '.$_SESSION["mbSelected"]["socketType"].'</br>';
+                echo '<b>Memory Type:</b> '.$_SESSION["mbSelected"]["ramType"].'</br>';
+                echo '<b>Price:</b> $'.$_SESSION["mbSelected"]["mbPrice"].'</br>';
+            ?>
+            <a href="Component Selection Data/motherboardSelectData.php?remove=true"><h5>Remove</h5></a>
+        </div>
     </div>
     <!------------------------------------END Motherboard SELECTION------------------------------------>
     
     <!-------------------------------------POWER SUPPLY SELECTION-------------------------------------->
-    <div id="psuSelection" class="itemSelection">
-        <button id="myBtnPSU">Choose Power Supply</button>
-        <div id="myModalPSU" class="modal">
-            <div class="modal-content">
-                <!--<span class="close">&times;</span>-->
-                <button type="button" onclick=psuCloseModal() class="btn btn-link closeModal">X</button></br>
-                <table class="selectTable">
-                    <!-- Put column names on top of the table -->
-                    <tr>
-                        <td><b>Name</b></td>
-                        <td><b>Watts</b></td>
-                        <td><b>Efficiency</b></td>
-                        <td><b>Modularity</b></td>
-                        <td><b>Price</td>
-                        <td></td>
-                    </tr>
-                    
-                    <?php
-                        // Print out hardware parts with relevant information
-                        $psu = getPSUs($dbConn);
-                        $i = 0;
-                        for($i; $i < count($psu); $i++) {
-                            echo '<tr>';
-                            echo '<td>'.$psu[$i]["psuName"].'</td>';
-                            echo '<td>'.$psu[$i]["psuWatts"].'</td>';
-                            echo '<td>'.$psu[$i]["psuEfficiency"].'</td>';
-                            echo '<td>'.$psu[$i]["psuModularity"].'</td>';
-                            echo '<td>$'.$psu[$i]["psuPrice"].'</td>';
-                            echo '<td><a href="Component Selection Data/psuSelectData.php?psuId='.$psu[$i]["psuId"].
-                                 '&remove=false">add</a></td>';
-                            echo '</tr>';
-                        }
-                    ?>
-                </table>
+    <div class="form-inline" id="componentSelectionRow">
+        <h3>Power Supply:</h3>
+        <div id="psuSelection" class="itemSelection">
+            <button id="myBtnPSU">Choose Power Supply</button>
+            <div id="myModalPSU" class="modal">
+                <div class="modal-content">
+                    <!--<span class="close">&times;</span>-->
+                    <button type="button" onclick=psuCloseModal() class="btn btn-link closeModal">X</button></br>
+                    <h3 style="text-align:center">Power Supply Selection</h5></br>
+                    <table class="selectTable">
+                        <!-- Put column names on top of the table -->
+                        <tr>
+                            <td><b>Name</b></td>
+                            <td><b>Watts</b></td>
+                            <td><b>Efficiency</b></td>
+                            <td><b>Modularity</b></td>
+                            <td><b>Price</td>
+                            <td></td>
+                        </tr>
+                        
+                        <?php
+                            // Print out hardware parts with relevant information
+                            $psu = getPSUs($dbConn);
+                            $i = 0;
+                            for($i; $i < count($psu); $i++) {
+                                echo '<tr>';
+                                echo '<td>'.$psu[$i]["psuName"].'</td>';
+                                echo '<td>'.$psu[$i]["psuWatts"].'</td>';
+                                echo '<td>'.$psu[$i]["psuEfficiency"].'</td>';
+                                echo '<td>'.$psu[$i]["psuModularity"].'</td>';
+                                echo '<td>$'.$psu[$i]["psuPrice"].'</td>';
+                                echo '<td><a href="Component Selection Data/psuSelectData.php?psuId='.$psu[$i]["psuId"].
+                                     '&remove=false">add</a></td>';
+                                echo '</tr>';
+                            }
+                        ?>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="psuSelectionData" class="itemSelection">
-        <?php echo $_SESSION["psuSelected"]["psuName"].'   '.$_SESSION["psuSelected"]["psuPrice"]; ?>
-        <a href="Component Selection Data/psuSelectData.php?remove=true">X</a>
+        <div id="psuSelectionData" class="itemSelection">
+            <?php 
+                echo '<b>Name:</b>  '.$_SESSION["psuSelected"]["psuName"].'</br>';
+                echo '<b>Price:</b> $'.$_SESSION["psuSelected"]["psuPrice"].'</br>';
+            ?>
+            <a href="Component Selection Data/psuSelectData.php?remove=true"><h5>Remove</h5></a>
+        </div>
     </div>
     <!-----------------------------------END POWER SUPPLY SELECTION------------------------------------>
     
     <!----------------------------------------MEMORY SELECTION----------------------------------------->
-    <div id="ramSelection" class="itemSelection">
-        <button id="myBtnRAM">Choose Memory</button>
-        <div id="myModalRAM" class="modal">
-            <div class="modal-content">
-                <!--<span class="close">&times;</span>-->
-                <button type="button" onclick=ramCloseModal() class="btn btn-link closeModal">X</button></br>
-                <table class="selectTable">
-                    <!-- Put column names on top of the table -->
-                    <tr>
-                        <td><b>Name</b></td>
-                        <td><b>Type</b></td>
-                        <td><b>Size (GB)</b></td>
-                        <td><b>Speed</b></td>
-                        <td><b>Cas</b></td>
-                        <td><b>Price</b></td>
-                        <td></td>
-                    </tr>
-                    
-                    <?php
-                        $ram = getRam($dbConn);
-                        $i = 0;
-                        for($i; $i < count($ram); $i++) {
-                            echo '<tr>';
-                            echo '<td>'.$ram[$i]["ramName"].'</td>';
-                            echo '<td>'.$ram[$i]["ramType"].'</td>';
-                            echo '<td>'.$ram[$i]["ramSizeGB"].'</td>';
-                            echo '<td>'.$ram[$i]["ramSpeed"].'</td>';
-                            echo '<td>'.$ram[$i]["ramCas"].'</td>';
-                            echo '<td>$'.$ram[$i]["ramPrice"].'</td>';
-                            echo '<td><a href="Component Selection Data/ramSelectData.php?ramId='.$ram[$i]["ramId"].
-                                 '&remove=false">add</a></td>';   
-                            echo '</tr>';
-                        }
-                    ?>
-                </table>
+    <div class="form-inline" id="componentSelectionRow">
+        <h3>Memory:</h3>
+        <div id="ramSelection" class="itemSelection">
+            <button id="myBtnRAM">Choose Memory</button>
+            <div id="myModalRAM" class="modal">
+                <div class="modal-content">
+                    <!--<span class="close">&times;</span>-->
+                    <button type="button" onclick=ramCloseModal() class="btn btn-link closeModal">X</button></br>
+                    <h3 style="text-align:center">Memory Selection</h5></br>
+                    <table class="selectTable">
+                        <!-- Put column names on top of the table -->
+                        <tr>
+                            <td><b>Name</b></td>
+                            <td><b>Type</b></td>
+                            <td><b>Size (GB)</b></td>
+                            <td><b>Speed</b></td>
+                            <td><b>Cas</b></td>
+                            <td><b>Price</b></td>
+                            <td></td>
+                        </tr>
+                        
+                        <?php
+                            $ram = getRam($dbConn);
+                            $i = 0;
+                            for($i; $i < count($ram); $i++) {
+                                echo '<tr>';
+                                echo '<td>'.$ram[$i]["ramName"].'</td>';
+                                echo '<td>'.$ram[$i]["ramType"].'</td>';
+                                echo '<td>'.$ram[$i]["ramSizeGB"].'</td>';
+                                echo '<td>'.$ram[$i]["ramSpeed"].'</td>';
+                                echo '<td>'.$ram[$i]["ramCas"].'</td>';
+                                echo '<td>$'.$ram[$i]["ramPrice"].'</td>';
+                                echo '<td><a href="Component Selection Data/ramSelectData.php?ramId='.$ram[$i]["ramId"].
+                                     '&remove=false">add</a></td>';   
+                                echo '</tr>';
+                            }
+                        ?>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="ramSelectionData" class="itemSelection">
-        <?php echo $_SESSION["ramSelected"]["ramName"].'   '.$_SESSION["ramSelected"]["ramPrice"]; ?>
-        <a href="Component Selection Data/ramSelectData.php?remove=true">X</a>
+        <div id="ramSelectionData" class="itemSelection">
+            <?php 
+                echo '<b>Name:</b>  '.$_SESSION["ramSelected"]["ramName"].'</br>';
+                echo '<b>Memory Type:</b> '.$_SESSION["ramSelected"]["ramType"].'</br>';
+                echo '<b>Price:</b> $'.$_SESSION["ramSelected"]["ramPrice"].'</br>';
+            ?>
+            <a href="Component Selection Data/ramSelectData.php?remove=true"><h5>Remove</h5></a>
+        </div>
     </div>
     <!--------------------------------------END MEMORY SELECTION--------------------------------------->
     
     <!----------------------------------------STORAGE SELECTION---------------------------------------->
-    <div id="storageSelection" class="itemSelection">
-        <button id="myBtnStorage">Choose Storage</button>
-        <div id="myModalStorage" class="modal">
-            <div class="modal-content">
-                <!--<span class="close">&times;</span>-->
-                <button type="button" onclick=storageCloseModal() class="btn btn-link closeModal">X</button></br>
-                <table class="selectTable">
-                    <!-- Put column names on top of the table -->
-                    <tr>
-                        <td><b>Name</b></td>
-                        <td><b>Size</b></td>
-                        <td><b>Type</b></td>
-                        <td><b>RPM</b></td>
-                        <td><b>Form Factor</b></td>
-                        <td><b>Price</b></td>
-                        <td></td>
-                    </tr>
-                    
-                    <?php
-                        // Print out hardware parts with relevant information
-                        $storage = getStorages($dbConn);
-                        $i = 0;
-                        for($i; $i < count($storage); $i++) {
-                            echo '<tr>';
-                            echo '<td>'.$storage[$i]["storageName"].'</td>';
-                            echo '<td>'.$storage[$i]["storageSize"].'</td>';
-                            echo '<td>'.$storage[$i]["storageType"].'</td>';
-                            echo '<td>'.$storage[$i]["storageRPM"].'</td>';
-                            echo '<td>'.$storage[$i]["storageFFType"].'</td>';
-                            echo '<td>$'.$storage[$i]["storagePrice"].'</td>';
-                            echo '<td><a href="Component Selection Data/storageSelectData.php?storageId='.$storage[$i]["storageId"].
-                                 '&remove=false">add</a></td>';
-                            echo '</tr>';
-                        }
-                    ?>
-                </table>
+    <div class="form-inline" id="componentSelectionRow">
+        <h3>Storage:</h3>
+        <div id="storageSelection" class="itemSelection">
+            <button id="myBtnStorage">Choose Storage</button>
+            <div id="myModalStorage" class="modal">
+                <div class="modal-content">
+                    <!--<span class="close">&times;</span>-->
+                    <button type="button" onclick=storageCloseModal() class="btn btn-link closeModal">X</button></br>
+                    <h3 style="text-align:center">Storage Selection</h5></br>
+                    <table class="selectTable">
+                        <!-- Put column names on top of the table -->
+                        <tr>
+                            <td><b>Name</b></td>
+                            <td><b>Size</b></td>
+                            <td><b>Type</b></td>
+                            <td><b>RPM</b></td>
+                            <td><b>Form Factor</b></td>
+                            <td><b>Price</b></td>
+                            <td></td>
+                        </tr>
+                        
+                        <?php
+                            // Print out hardware parts with relevant information
+                            $storage = getStorages($dbConn);
+                            $i = 0;
+                            for($i; $i < count($storage); $i++) {
+                                echo '<tr>';
+                                echo '<td>'.$storage[$i]["storageName"].'</td>';
+                                echo '<td>'.$storage[$i]["storageSize"].'</td>';
+                                echo '<td>'.$storage[$i]["storageType"].'</td>';
+                                echo '<td>'.$storage[$i]["storageRPM"].'</td>';
+                                echo '<td>'.$storage[$i]["storageFFType"].'</td>';
+                                echo '<td>$'.$storage[$i]["storagePrice"].'</td>';
+                                echo '<td><a href="Component Selection Data/storageSelectData.php?storageId='.$storage[$i]["storageId"].
+                                     '&remove=false">add</a></td>';
+                                echo '</tr>';
+                            }
+                        ?>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="storageSelectionData" class="itemSelection">
-        <?php echo $_SESSION["storageSelected"]["storageName"].'   '.$_SESSION["storageSelected"]["storagePrice"]; ?>
-        <a href="Component Selection Data/storageSelectData.php?remove=true">X</a>
+        <div id="storageSelectionData" class="itemSelection">
+            <?php 
+                echo '<b>Name:</b>  '.$_SESSION["storageSelected"]["storageName"].'</br>';
+                echo '<b>Price:</b> $'.$_SESSION["storageSelected"]["storagePrice"].'</br>';
+            ?>
+            <a href="Component Selection Data/storageSelectData.php?remove=true"><h5>Remove</h5></a>
+        </div>
     </div>
     <!--------------------------------------END STORAGE SELECTION-------------------------------------->
     
+    </br><div id="compatibilityErrors">
+        <button type="button" class="btn btn-link close" onclick=hideErrors()>&times;</button>
+            <?php
+                $i= 0;
+                for($i; $i<count($_SESSION['errors']);$i++) {
+                    echo $_SESSION['errors'][$i].'</br>';
+                }
+            ?>
+    </div>
+    
+    <button type="button" class="btn btn-primary" style="margin:10px" onClick="location.href='compatibilityCheck.php'">Check Compatibility</button></br>
+    
     <script>
+        function hideErrors() {
+            $('#compatibilityErrors').fadeOut();
+        }
+        
+        function showErrors() {
+            $('#compatibilityErrors').fadeIn();
+        }
+    
+        if('<?php echo (count($_SESSION['errors']) >  0) ? 1 : 0; ?>' == 1) {
+            $('#compatibilityErrors').fadeIn();
+        }
+        
         // When the user clicks anywhere outside of a modal, close it
         window.onclick = function(event) {
             if (event.target == document.getElementById('myModalCase')) {

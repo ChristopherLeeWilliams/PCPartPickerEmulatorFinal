@@ -46,6 +46,24 @@
     cursor: pointer;
 }
 
+#compatibilityErrors {
+    font-size: 20px;
+    padding: 10px;
+    border: solid grey 1px;
+    margin: 5px 1% 5px 1%;
+    display: none;
+}
+
+#componentSelectionRow {
+    border: solid grey 1px;
+    margin: 2px;
+}
+
+.form-inline h3 {
+    margin: 10px;
+    min-width: 10%;
+}
+
 .itemSelection {
     margin: 10px;
     font-size: 20px;
@@ -103,6 +121,7 @@
     height: 50%;
     font-size: 16px;
     overflow: auto;
+    position: centered;
 }
 
 /* The Close Button */

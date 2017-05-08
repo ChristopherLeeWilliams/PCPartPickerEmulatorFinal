@@ -2,6 +2,8 @@
     require_once('../connection.php');
     session_start();
     
+    $_SESSION['errors'] = null;
+    
     if($_GET["remove"] == true) {
         $_SESSION["cpuSelected"] = NULL;
         $_SESSION["compatibilityChecked"] = false;
@@ -17,23 +19,20 @@
     header("Location: ../index.php");
     
     function getCPUData($dbConn, $id) {
-        // Create sql statement
-        $sql = "SELECT CPU.cpuId, CPU.cpuName, CPU.cpuPrice, CPU.cpuSocketId, CPU.cpuTDP
-                FROM CPU WHERE CPU.cpuId=$id";
+        $sql = "SELECT CPU.*, Socket.*
+                    FROM CPU 
+                    LEFT JOIN Socket
+                        ON CPU.cpuSocketId=Socket.socketId
+                    WHERE CPU.cpuId=$id";
         
         // prepare SQL
         $stmt = $dbConn->prepare($sql);
         
         // Execute SQL
         $stmt->execute();
-        $cpu = [];
-        $row = $stmt->fetch();
-        $cpu["cpuName"] = $row["cpuName"];
-        $cpu["cpuPrice"] = $row["cpuPrice"];
-        $cpu["cpuSocketId"] = $row["cpuSocketId"];
-        $cpu["cpuTDP"] = $row["cpuTDP"];
-        $cpu["cpuId"] = $row["cpuId"];
         
-        return $cpu;
+        $row = $stmt->fetch();
+        
+        return $row;
     }
 ?>

@@ -2,6 +2,8 @@
     require_once('../connection.php');
     session_start();
     
+    $_SESSION['errors'] = null;
+    
     if($_GET["remove"] == true) {
         $_SESSION["mbSelected"] = NULL;
         $_SESSION["compatibilityChecked"] = false;
@@ -17,27 +19,24 @@
     header("Location: ../index.php");
     
     function getMbData($dbConn, $id) {
-        // Create sql statement
-        $sql = "SELECT Motherboard.mbId, Motherboard.mbName, Motherboard.mbPrice,
-                Motherboard.mbSocketId, Motherboard.mbFFId, Motherboard.mbRamTypeId, Motherboard.maxRamGB
-                FROM Motherboard WHERE Motherboard.mbId=$id";
-
+        $sql = "SELECT Motherboard.*, Socket.*, MBFormFactors.*, RamType.* 
+                FROM Motherboard
+                LEFT JOIN Socket
+                    ON Motherboard.mbSocketId=Socket.socketId
+                LEFT JOIN MBFormFactors
+                    ON Motherboard.mbFFId=MBFormFactors.mbFFId
+                LEFT JOIN RamType
+                    ON Motherboard.mbRamTypeId=RamType.ramTypeId
+                WHERE Motherboard.mbId=$id";
         
-        // prepare SQL
+        // Prepare SQL
         $stmt = $dbConn->prepare($sql);
         
         // Execute SQL
         $stmt->execute();
-        $mb = [];
+
         $row = $stmt->fetch();
-        $mb["mbId"] = $row["mbId"];
-        $mb["mbName"] = $row["mbName"];
-        $mb["mbPrice"] = $row["mbPrice"];
-        $mb["mbSocketId"] = $row["mbSocketId"];
-        $mb["mbFFId"] = $row["mbFFId"];
-        $mb["mbRamTypeId"] = $row["mbRamTypeId"];
-        $mb["maxRamGB"] = $row["maxRamGB"];
         
-        return $mb;
+        return $row;
     }
 ?>

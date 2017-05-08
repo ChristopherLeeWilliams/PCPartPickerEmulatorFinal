@@ -2,6 +2,8 @@
     require_once('../connection.php');
     session_start();
     
+    $_SESSION['errors'] = null;
+    
     if($_GET["remove"] == true) {
         $_SESSION["ramSelected"] = NULL;
         $_SESSION["compatibilityChecked"] = false;
@@ -18,23 +20,20 @@
     
     function getRAMData($dbConn, $id) {
         // Create sql statement
-        $sql = "SELECT RAM.ramId, RAM.ramName, RAM.ramPrice, RAM.ramTypeId, RAM.ramSizeGB
-                FROM RAM WHERE RAM.ramId=$id";
+        $sql = "SELECT RAM.*, RamType.*
+                FROM RAM 
+                LEFT JOIN RamType
+                    ON RAM.ramTypeId=RamType.ramTypeId
+               WHERE RAM.ramId=$id";
         
-        // prepare SQL
+        // Prepare SQL
         $stmt = $dbConn->prepare($sql);
         
         // Execute SQL
         $stmt->execute();
-        $ram = [];
+        
         $row = $stmt->fetch();
-        $ram["ramId"] = $row["ramId"];
-        $ram["ramName"] = $row["ramName"];
-        $ram["ramPrice"] = $row["ramPrice"];
-        $ram["ramTypeId"] = $row["ramTypeId"];
-        $ram["ramSizeGB"] = $row["ramSizeGB"];
         
-        
-        return $ram;
+        return $row;
     }
 ?>
