@@ -107,6 +107,7 @@
       <label for="example-number-input" class="col-1 col-form-label">Base Clock (GHz)</label>
       <div class="col-10">
         <input class="form-control" type="text" value="" id="cpuBaseClockInput">
+        <small class="form-text text-muted">EX: "4.4GHz"</small>
       </div>
     </div>
     
@@ -114,21 +115,21 @@
     <div class="form-group row">
       <label for="example-number-input" class="col-1 col-form-label"># Cores</label>
       <div class="col-10">
-        <input class="form-control" type="number" value="" id="cpuNumCoresInput">
+        <input class="form-control" type="number" min="0" value="" id="cpuNumCoresInput">
       </div>
     </div>
     
     <div class="form-group row">
       <label for="example-number-input" class="col-1 col-form-label">TDP</label>
       <div class="col-10">
-        <input class="form-control" type="number" value="" id="cpuTDPInput">
+        <input class="form-control" type="number" min="0" value="" id="cpuTDPInput">
       </div>
     </div>
     
     <div class="form-group row">
       <label for="example-number-input" class="col-1 col-form-label">Price (USD)</label>
       <div class="col-10">
-        <input class="form-control" type="number" value="" id="cpuPriceInput">
+        <input class="form-control" type="number" min="0" value="" id="cpuPriceInput">
       </div>
     </div>
     
@@ -154,7 +155,11 @@
         <input class="form-control" type="text" value="" id="cpuManufacturerInput">
       </div>
     </div>
-    </br><button type="reset"  class="btn btn-primary btn-md" value="Reset">Clear</button>
+    
+    <div class="form-inline">
+      </br><button type="reset"  class="btn btn-primary btn-md" value="Reset">Clear</button></br>
+      </br><button type="button" class="btn btn-primary btn-md" onClick="location.href='/Final Project/Admin Tools/cpuForm.php'">Deselect Update Target</button>
+    </div>
     </form>
 
     <script>

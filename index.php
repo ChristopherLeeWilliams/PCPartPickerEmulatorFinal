@@ -56,11 +56,11 @@
         <form class="form-inline" id="modify-database-form">
             <button type="button" class="btn btn-primary btn-sm" onClick="location.href='/Final Project/Admin Tools/caseForm.php'">Case</button>
             <button type="button" class="btn btn-primary btn-sm" onClick="location.href='/Final Project/Admin Tools/cpuForm.php'">CPU</button>
-            <button type="button" class="btn btn-primary btn-sm">GPU</button>
-            <button type="button" class="btn btn-primary btn-sm">Motherboard</button>
-            <button type="button" class="btn btn-primary btn-sm">Power Supply</button>
-            <button type="button" class="btn btn-primary btn-sm">Memory</button>
-            <button type="button" class="btn btn-primary btn-sm">Storage</button>
+            <button type="button" class="btn btn-primary btn-sm" onClick="location.href='/Final Project/Admin Tools/gpuForm.php'">GPU</button>
+            <button type="button" class="btn btn-primary btn-sm" onClick="location.href='/Final Project/Admin Tools/motherboardForm.php'">Motherboard</button>
+            <button type="button" class="btn btn-primary btn-sm" onClick="location.href='/Final Project/Admin Tools/psuForm.php'">Power Supply</button>
+            <button type="button" class="btn btn-primary btn-sm" onClick="location.href='/Final Project/Admin Tools/ramForm.php'">Memory</button>
+            <button type="button" class="btn btn-primary btn-sm" onClick="location.href='/Final Project/Admin Tools/storageForm.php'">Storage</button>
         </form>
     </div>
     

@@ -70,9 +70,10 @@
                 echo '<td>'.$case[$i]["caseNum25Bays"].'</td>';
                 echo '<td>'.$case[$i]["caseNum35Bays"].'</td>';
                 echo '<td>$'.$case[$i]["casePrice"].'</td>';
-                echo '<td><a href="caseForm.php?caseId='.$case[$i]["caseId"].'">Update</a></td>';
-                echo '<td><a href="Component Selection Data/caseSelectData.php?caseId='.$case[$i]["caseId"].
-                 '&remove=false">Delete</a></td>';
+                echo '<td><a href="caseForm.php?caseId='.$case[$i]["caseId"].'">Select</a></td>';
+                // echo '<td><a href="Component Selection Data/caseSelectData.php?caseId='.$case[$i]["caseId"].
+                // '&remove=false">Delete</a></td>';
+                echo '<td><button type="button" class="btn btn-link" onClick=deleteFromDatabase('.$case[$i]["caseId"].')>Delete</button></td>';
                 echo '</tr>';
             }
         ?> 
@@ -95,14 +96,16 @@
     </br>
     
     <h3> Add New / Update: </h3></br>
-    <div class="form-group row">
+    <form id="dataInputForm">
+      
+    <div class="form-group row" id="caseNameDiv">
       <label for="example-text-input" class="col-1 col-form-label">Case Name</label>
       <div class="col-10">
         <input class="form-control" type="text" value="" id="caseNameInput">
       </div>
     </div>
     
-    <div class="form-group row">
+    <div class="form-group row" id="caseFFDiv">
       <label for="example-number-input" class="col-1 col-form-label">Form Factor</label>
       <div class="col-10">
       <select class="form-control" id="caseFFInput">
@@ -116,36 +119,46 @@
       </select>
       </div>
     </div>
-    <div class="form-group row">
-      <label for="example-number-input" class="col-1 col-form-label">Max GPU Length</label>
+    
+    <div class="form-group row " id="caseMaxGPULengthDiv">
+      <label for="example-number-input" class="col-1 col-form-label">Max GPU Length (Inches)</label>
       <div class="col-10">
-        <input class="form-control" type="number" value="" id="caseMaxGPULengthInput">
+        <input class="form-control" type="number" min="0" min="0" value="" id="caseMaxGPULengthInput">
       </div>
     </div>
     
-    <div class="form-group row">
+    <div class="form-group row" id="case25BaysDiv">
       <label for="example-number-input" class="col-1 col-form-label">#2.5' Bays</label>
       <div class="col-10">
-        <input class="form-control" type="number" value="" id="case25BaysInput">
+        <input class="form-control" type="number" min="0" value="" id="case25BaysInput">
       </div>
     </div>
     
-    <div class="form-group row">
+    <div class="form-group row" id="case35BaysDiv">
       <label for="example-number-input" class="col-1 col-form-label">#3.5' Bays</label>
       <div class="col-10">
-        <input class="form-control" type="number" value="" id="case35BaysInput">
+        <input class="form-control" type="number" min="0" value="" id="case35BaysInput">
       </div>
     </div>
     
-    <div class="form-group row">
+    <div class="form-group row" id="casePriceDiv">
       <label for="example-number-input" class="col-1 col-form-label">Price</label>
       <div class="col-10">
-        <input class="form-control" type="number" value="" id="casePriceInput">
+        <input class="form-control" type="number" min="0" value="" id="casePriceInput">
       </div>
     </div>
-
+    
+    <div class="form-inline">
+      </br><button type="reset"  class="btn btn-primary btn-md" value="Reset">Clear</button></br>
+      </br><button type="button" class="btn btn-primary btn-md" onClick="location.href='/Final Project/Admin Tools/caseForm.php'">Deselect Update Target</button>
+      
+      </br><button type="button" class="btn btn-primary btn-md" onClick=addCaseToDatabase()>Add</button>
+      </br><button type="button" class="btn btn-primary btn-md" onClick=updateCaseInDatabase()>Update</button>
+    </div>
+    </form>
+    
     <script>
-      if ('<?php echo $_GET['cpuId']; ?>' != null) {
+      if ('<?php echo $_GET['caseId']; ?>' != null) {
         $('#caseNameInput').val('<?php echo $caseS["caseName"]; ?>');
         $('#caseFFInput').val('<?php echo $caseS["caseFFId"]; ?>');
         $('#caseMaxGPULengthInput').val('<?php echo $caseS["maxGPULengthInches"]; ?>');
@@ -153,6 +166,145 @@
         $('#case35BaysInput').val('<?php echo $caseS["caseNum35Bays"]; ?>');
         $('#casePriceInput').val('<?php echo $caseS["casePrice"]; ?>');
       }
+      
+      function addCaseToDatabase() {
+        var wasSuccessful = checkFieldsAreSet();
+        if (wasSuccessful == true) {
+          console.log("All fields are set, ready to add!");
+          addToDatabase("add","case");
+        } else {
+          console.log("One or more fields are incorrect");
+        }
+      }
+      
+      function updateCaseInDatabase() {
+        var wasSuccessful = checkFieldsAreSet();
+        if (wasSuccessful == true) {
+          console.log("All fields are set, ready to add!");
+          addToDatabase("update","case");
+          
+        } else {
+          console.log("One or more fields are incorrect");
+        }
+      }
+
+      
+      function addToDatabase(action, componentType) {
+        var id = '<?php echo $_GET['caseId']; ?>';
+        var component = {
+          caseId: id,
+          caseName:  $('#caseNameInput').val(),
+          caseFFId: $('#caseFFInput').val(),
+          maxGPULengthInches: $('#caseMaxGPULengthInput').val(),
+          caseNum25Bays: $('#case25BaysInput').val(),
+          caseNum35Bays: $('#case35BaysInput').val(),
+          casePrice: $('#casePriceInput').val(),
+        }
+        
+        var data = {
+            componentType: componentType,
+            action: action,
+            component: component
+        };
+        
+        $.ajax({
+            type: "POST",
+            data: data,
+            url: "databaseModificationFunctions.php",
+            success: function(data) {
+                console.log(data);
+            }
+        });
+        
+      }
+      
+      function checkFieldsAreSet() {
+        var successful = true;
+        
+        if ($('#caseNameInput').val() === "") {
+          $('#caseNameDiv').addClass("has-danger");
+          $('#caseNameDiv').removeClass("has-success");
+          successful = false;
+        } else {
+          $('#caseNameDiv').removeClass("has-danger");
+          $('#caseNameDiv').addClass("has-success");
+        }
+        
+        if ($('#caseFFInput').val() < 1) {
+          $('#caseFFDiv').addClass("has-danger");
+          $('#caseFFDiv').removeClass("has-success");
+          successful = false;
+          
+        } else {
+          $('#caseFFDiv').removeClass("has-danger");
+          $('#caseFFDiv').addClass("has-success");
+        }
+        
+        if ($('#caseMaxGPULengthInput').val() === "") {
+          $('#caseMaxGPULengthDiv').addClass("has-danger");
+          $('#caseMaxGPULengthDiv').removeClass("has-success");
+          successful = false;
+        } else {
+          $('#caseMaxGPULengthDiv').removeClass("has-danger");
+          $('#caseMaxGPULengthDiv').addClass("has-success");
+        }
+        
+        if ($('#case25BaysInput').val() === "") {
+          $('#case25BaysDiv').addClass("has-danger");
+          $('#case25BaysDiv').removeClass("has-success");
+          successful = false;
+        } else {
+          $('#case25BaysDiv').removeClass("has-danger");
+          $('#case25BaysDiv').addClass("has-success");
+        }
+        
+        if ($('#case35BaysInput').val() === "") {
+          $('#case35BaysDiv').addClass("has-danger");
+          $('#case35BaysDiv').removeClass("has-success");
+          successful = false;
+        } else {
+          $('#case35BaysDiv').removeClass("has-danger");
+          $('#case35BaysDiv').addClass("has-success");
+        }
+        
+        if ($('#casePriceInput').val() === "") {
+          $('#casePriceDiv').addClass("has-danger");
+          $('#casePriceDiv').removeClass("has-success");
+          successful = false;
+        } else {
+          $('#casePriceDiv').removeClass("has-danger");
+          $('#casePriceDiv').addClass("has-success");
+        }
+        
+        return successful;
+      }
+      
+      function deleteFromDatabase(id) {
+        console.log("Called to delete"+id);
+        var component = {
+          caseId: id
+        };
+        
+        var componentType = "case";
+        var action = "delete";
+        
+        var data = {
+            componentType: componentType,
+            action: action,
+            component: component
+        };
+        
+         $.ajax({
+            type: "POST",
+            data: data,
+            url: "databaseModificationFunctions.php",
+            success: function(data) {
+                console.log("Ajax Successful: "+data);
+            }
+        });
+      }
+      
+      
     </script>
   
 </html>

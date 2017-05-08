@@ -143,7 +143,7 @@
         // Create sql statement
         $sql = "SELECT GPU.*
                 FROM GPU 
-                WHERE GPU.gpuId";
+                WHERE GPU.gpuId=$id";
         
         
         // Prepare SQL
@@ -339,6 +339,29 @@
         return $row;
     }
     
+    function getRamTypes($dbConn) {
+        // Create sql statement
+        $sql = "SELECT RamType.*
+                FROM RamType";
+        
+        // Prepare SQL
+        $stmt = $dbConn->prepare($sql);
+        
+        // Execute SQL
+        $stmt->execute();
+        
+        $componentArr = [];
+        $component = [];
+        $i = 0;
+        
+        while($row = $stmt->fetch()) { 
+            $componentArr[$i] = $row;
+            $i++;
+        }
+        
+        return $componentArr;
+    }
+    
     function getSockets($dbConn) {
         // Create sql statement
         $sql = "SELECT Socket.*
@@ -416,6 +439,30 @@
         
         return $row;
     }
-
+    
+    function getStorageFormFactors($dbConn) {
+        // Create sql statement
+        $sql = "SELECT StorageFormFactors.*
+                FROM StorageFormFactors";
+        
+        // Prepare SQL
+        $stmt = $dbConn->prepare($sql);
+        
+        // Execute SQL
+        $stmt->execute();
+        
+        $componentArr = [];
+        $component = [];
+        $i = 0;
+        
+        while($row = $stmt->fetch()) { 
+            $component["storageFFId"] = $row["storageFFId"];
+            $component["storageFFType"] = $row["storageFFType"];
+            $componentArr[$i] = $component;
+            $i++;
+        }
+        
+        return $componentArr;
+    }
 
 ?>

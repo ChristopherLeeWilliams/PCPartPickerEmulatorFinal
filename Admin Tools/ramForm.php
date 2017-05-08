@@ -40,7 +40,7 @@
 
     <button type="button" class="btn btn-primary btn-md" onClick="location.href='/Final Project/index.php'">Main Menu</button>
 
-    <h1 class="title">CPU Form:</h1>
+    <h1 class="title">Memory Form:</h1>
     
     
     <h3> Delete / Update: </h3></br>
@@ -48,124 +48,113 @@
         <table class="selectTable">
             <!-- Put column names on top of the table -->
             <tr>
-                <td><b>Name</b></td>
-                <td><b>Socket</b></td>
-                <td><b>Base Clock</b></td>
-                <td><b># Cores</b></td>
-                <td><b>TDP (Watts)</b></td>
-                <td><b>Price</b></td>
-                <td></td>
-                <td></td>
-            </tr>
-            
-            <?php
-                // Print out hardware parts with relevant information
-                $CPUs = getCPUs($dbConn);
-                $i = 0;
-                for($i; $i < count($CPUs); $i++) {
-                    echo '<tr>';
-                    echo '<td>'.$CPUs[$i]["cpuName"].'</td>';
-                    echo '<td>'.$CPUs[$i]["socketType"].'</td>';
-                    echo '<td>'.$CPUs[$i]["cpuBaseClock"].'</td>';
-                    echo '<td>'.$CPUs[$i]["cpuNumCores"].'</td>';
-                    echo '<td>'.$CPUs[$i]["cpuTDP"].'</td>';
-                    echo '<td>$'.$CPUs[$i]["cpuPrice"].'</td>';
-                    echo '<td><a href="cpuForm.php?cpuId='.$CPUs[$i]["cpuId"].'">Update</a></td>';
-                    echo '<td><a href="Component Selection Data/cpuSelectData.php?cpuId='.$CPUs[$i]["cpuId"].
-                     '&remove=false">Delete</a></td>';
-                    echo '</tr>';
-                }
-            ?>
+              <td><b>Name</b></td>
+              <td><b>Type</b></td>
+              <td><b>Size (GB)</b></td>
+              <td><b>Speed</b></td>
+              <td><b>Cas</b></td>
+              <td><b>Price</b></td>
+              <td></td>
+              <td></td>
+          </tr>
+          
+          <?php
+              $ram = getRam($dbConn);
+              $i = 0;
+              for($i; $i < count($ram); $i++) {
+                  echo '<tr>';
+                  echo '<td>'.$ram[$i]["ramName"].'</td>';
+                  echo '<td>'.$ram[$i]["ramType"].'</td>';
+                  echo '<td>'.$ram[$i]["ramSizeGB"].'</td>';
+                  echo '<td>'.$ram[$i]["ramSpeed"].'</td>';
+                  echo '<td>'.$ram[$i]["ramCas"].'</td>';
+                  echo '<td>$'.$ram[$i]["ramPrice"].'</td>';
+                  echo '<td><a href="ramForm.php?ramId='.$ram[$i]["ramId"].'">Update</a></td>';
+                  echo '<td><a href="Component Selection Data/ramSelectData.php?ramId='.$ram[$i]["ramId"].
+                       '&remove=false">add</a></td>';   
+                  echo '</tr>';
+              }
+          ?>
         </table>
     </div>
     </br></br>
     
     <?php
         // Print current update target
-        $CPU = getCPU($dbConn,$_GET['cpuId']);
-        // echo '<table class="selectTable"><tr>';
-        // echo '<td>'.$CPU["cpuName"].'</td>';
-        // echo '<td>'.$CPU["socketType"].'</td>';
-        // echo '<td>'.$CPU["cpuBaseClock"].'</td>';
-        // echo '<td>'.$CPU["cpuNumCores"].'</td>';
-        // echo '<td>'.$CPU["cpuTDP"].'</td>';
-        // echo '<td>$'.$CPU["cpuPrice"].'</td>';
-        // echo '</table>';
+        $ramSingle = getRamSingle($dbConn,$_GET['ramId']);
     ?>
     
     </br>
     <h3> Add New / Update: </h3></br>
     <form id="dataInputForm">
-    <div class="form-group row">
-      <label for="example-text-input" class="col-1 col-form-label">CPU Name</label>
-      <div class="col-10">
-        <input class="form-control" type="text" value="" id="cpuNameInput">
+        
+      <div class="form-group row">
+        <label for="example-text-input" class="col-1 col-form-label">Ram Name</label>
+        <div class="col-10">
+          <input class="form-control" type="text" value="" id="ramNameInput">
+        </div>
       </div>
-    </div>
-    
-    <div class="form-group row">
-      <label for="example-number-input" class="col-1 col-form-label">Base Clock (GHz)</label>
-      <div class="col-10">
-        <input class="form-control" type="text" value="" id="cpuBaseClockInput">
+      
+      <div class="form-group row">
+        <label for="example-number-input" class="col-1 col-form-label">Ram Type</label>
+        <div class="col-10">
+        <select class="form-control" id="ramTypeInput">
+          <?php
+              $ramTypes = getRamTypes($dbConn);
+              $i = 0;
+              for($i; $i < count($ramTypes); $i++) {
+                echo '<option value='.$ramTypes[$i]["ramTypeId"].'>'.$ramTypes[$i]["ramType"].'</option>';
+                  
+              }
+          ?>
+        </select>
+        </div>
       </div>
-    </div>
-    
-    
-    <div class="form-group row">
-      <label for="example-number-input" class="col-1 col-form-label"># Cores</label>
-      <div class="col-10">
-        <input class="form-control" type="number" value="" id="cpuNumCoresInput">
+      
+      <div class="form-group row">
+        <label for="example-text-input" class="col-1 col-form-label">Speed (Append MHz)</label>
+        <div class="col-10">
+          <input class="form-control" type="text" value="" id="ramSpeedInput">
+          <small class="form-text text-muted">EX: "1600MHz"</small>
+        </div>
       </div>
-    </div>
-    
-    <div class="form-group row">
-      <label for="example-number-input" class="col-1 col-form-label">TDP</label>
-      <div class="col-10">
-        <input class="form-control" type="number" value="" id="cpuTDPInput">
+      
+      
+      <div class="form-group row">
+        <label for="example-number-input" class="col-1 col-form-label">CAS (ns)</label>
+        <div class="col-10">
+          <input class="form-control" type="number" min="0" value="" id="ramCASInput">
+        </div>
       </div>
-    </div>
-    
-    <div class="form-group row">
-      <label for="example-number-input" class="col-1 col-form-label">Price (USD)</label>
-      <div class="col-10">
-        <input class="form-control" type="number" value="" id="cpuPriceInput">
+      
+      <div class="form-group row">
+        <label for="example-number-input" class="col-1 col-form-label">Size (GB)</label>
+        <div class="col-10">
+          <input class="form-control" type="number" min="0" value="" id="ramSizeInput">
+        </div>
       </div>
-    </div>
-    
-    <div class="form-group row">
-      <label for="example-number-input" class="col-1 col-form-label">CPU Socket</label>
-      <div class="col-10">
-      <select class="form-control" id="cpuSocketTypeInput">
-        <?php
-            $sockets = getSockets($dbConn);
-            $i = 0;
-            for($i; $i < count($sockets); $i++) {
-              echo '<option value='.$sockets[$i]["socketId"].'>'.$sockets[$i]["socketType"].'</option>';
-                
-            }
-        ?>
-      </select>
+      
+      <div class="form-group row">
+        <label for="example-number-input" class="col-1 col-form-label">Price (USD)</label>
+        <div class="col-10">
+          <input class="form-control" type="number" min="0" value="" id="ramPriceInput">
+        </div>
       </div>
-    </div>
-    
-    <div class="form-group row">
-      <label for="example-text-input" class="col-1 col-form-label">Manufacturer</label>
-      <div class="col-10">
-        <input class="form-control" type="text" value="" id="cpuManufacturerInput">
+      <div class="form-inline">
+        </br><button type="reset"  class="btn btn-primary btn-md" value="Reset">Clear</button></br>
+        </br><button type="button" class="btn btn-primary btn-md" onClick="location.href='/Final Project/Admin Tools/ramForm.php'">Deselect Update Target</button>
       </div>
-    </div>
-    </br><button type="reset"  class="btn btn-primary btn-md" value="Reset">Clear</button>
+    
     </form>
 
     <script>
       if ('<?php echo $_GET['cpuId']; ?>' != null) {
-        $('#cpuNameInput').val('<?php echo $CPU["cpuName"]; ?>');
-        $('#cpuBaseClockInput').val('<?php echo $CPU["cpuBaseClock"]; ?>');
-        $('#cpuNumCoresInput').val('<?php echo $CPU["cpuNumCores"]; ?>');
-        $('#cpuTDPInput').val('<?php echo $CPU["cpuTDP"]; ?>');
-        $('#cpuPriceInput').val('<?php echo $CPU["cpuPrice"]; ?>');
-        $('#cpuSocketTypeInput').val('<?php echo $CPU["cpuSocketId"]; ?>');
-        $('#cpuManufacturerInput').val('<?php echo $CPU["cpuManufacturer"]; ?>');
+        $('#ramNameInput').val('<?php echo $ramSingle["ramName"]; ?>');
+        $('#ramTypeInput').val('<?php echo $ramSingle["ramTypeId"]; ?>');
+        $('#ramSpeedInput').val('<?php echo $ramSingle["ramSpeed"]; ?>');
+        $('#ramCASInput').val('<?php echo $ramSingle["ramCas"]; ?>');
+        $('#ramSizeInput').val('<?php echo $ramSingle["ramSizeGB"]; ?>');
+        $('#ramPriceInput').val('<?php echo $ramSingle["ramPrice"]; ?>');
       }
     </script>
 </html>
